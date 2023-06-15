@@ -1,98 +1,147 @@
-var correctSound = new Audio("assets/sounds/acertou.mp3");
-var incorrectSound = new Audio("assets/sounds/errou.mp3");
-var victorySound = new Audio("assets/sounds/aespa.mp3");
-var backgroundMusic = document.getElementById("background-music");
-var answerMusic = document.getElementById("answer-music");
-
-var welcomeElement = document.querySelector('.welcome-message');
-var titleElement = document.querySelector('.title');
-var startButtonElement = document.getElementById('start-button');
-var gameElement = document.getElementById('game');
-var questionElement = document.getElementById('question');
-var optionsElement = Array.from(document.getElementsByClassName('option'));
-var gameOverElement = document.getElementById('game-over');
-var restartButtonElement = document.getElementById('restart-button');
-var congratsElement = document.getElementById('congrats');
-var option1Element = document.getElementById('option1');
-var option2Element = document.getElementById('option2');
-
-var questions = [
-  {
-    text: "Quem é mais over power de todos?",
-    options: ["Batman", "Batman com preparo", "Batman do futuro", "Batman sempre"],
-    answer: "Batman sempre"
-  },
-  {
-    text: "Quem é a mulher mais bonita do multiverso?",
-    options: ["Hyun-ah", "Madonna", "Heluara Madlene"],
-    answer: "Heluara Madlene"
-  },
-  {
-    text: "Qual album de kpop teve maior renda até hoje?",
-    options: ["Map of the Soul: Persona do BTS", "The War do EXO", "Map of the Soul: 7 do BTS", "Love Yourself: Answer do BTS"],
-    answer: "Map of the Soul: 7 do BTS"
-  }
+// Armazenar as perguntas e respostas
+const questions = [
+    {
+        question: "Qual é a capital do Brasil?",
+        options: ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador"],
+        answer: 2
+    },
+    {
+        question: "Qual é o maior planeta do sistema solar?",
+        options: ["Júpiter", "Saturno", "Terra", "Vênus"],
+        answer: 0
+    },
+    // Adicione as outras perguntas aqui
 ];
 
-var currentQuestionIndex = 0;
+// Elementos da interface
+const startButton = document.getElementById("startButton");
+const questionContainer = document.getElementById("questionContainer");
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const nextButton = document.getElementById("nextButton");
+const gameOverContainer = document.getElementById("gameOverContainer");
+const retryButton = document.getElementById("retryButton");
+const winContainer = document.getElementById("winContainer");
+const surprise1Button = document.getElementById("surprise1Button");
+const surprise2Button = document.getElementById("surprise2Button");
+const backgroundAudio = document.getElementById("backgroundAudio");
+const correctSound = document.getElementById("correctSound");
+const wrongSound = document.getElementById("wrongSound");
 
-startButtonElement.addEventListener('click', function() {
-  welcomeElement.style.display = "none";
-  titleElement.style.display = "block";
-  gameElement.style.display = "block";
-  loadQuestion();
-  backgroundMusic.play();
-});
+// Variáveis do jogo
+let currentQuestionIndex = 0;
+let score = 0;
 
-restartButtonElement.addEventListener('click', restartGame);
-option1Element.addEventListener('click', function() {
-  showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
-});
-option2Element.addEventListener('click', function() {
-  showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
-});
-
-function loadQuestion() {
-  if (currentQuestionIndex >= questions.length) {
-    gameElement.style.display = "none";
-    congratsElement.style.display = "block";
-    congratsElement.innerText = "Olha pra ela como ela é inteligente, acertou, parabéns!!!";
-    victorySound.play();
-    backgroundMusic.pause();
-  } else {
-    var question = questions[currentQuestionIndex];
-    questionElement.innerText = question.text;
-    optionsElement.forEach(function(element, index) {
-      element.innerText = question.options[index];
-      element.addEventListener('click', function() {
-        if (this.innerText === question.answer) {
-          correctSound.play();
-          setTimeout(function() {
-            currentQuestionIndex++;
-            loadQuestion();
-          }, 1000);
-        } else {
-          gameElement.style.display = "none";
-          gameOverElement.style.display = "block";
-          incorrectSound.play();
-        }
-      });
+// Inicializar o jogo
+function initializeGame() {
+    startButton.addEventListener("click", startGame);
+    nextButton.addEventListener("click", () => {
+        currentQuestionIndex++;
+        setNextQuestion();
     });
-  }
+    retryButton.addEventListener("click", startGame);
+    surprise1Button.addEventListener("click", () => {
+        alert("Almoço em restaurante de sua escolha");
+    });
+    surprise2Button.addEventListener("click", () => {
+        alert("Qualquer almoço de aplicativo de sua escolha");
+    });
+
+    setGameScreen("container");
 }
 
-function restartGame() {
-  currentQuestionIndex = 0;
-  gameOverElement.style.display = "none";
-  gameElement.style.display = "block";
-  loadQuestion();
+// Iniciar o jogo
+function startGame() {
+    score = 0;
+    currentQuestionIndex = 0;
+    setGameScreen("questionContainer");
+    setNextQuestion();
 }
 
-function showMessage(message) {
-  congratsElement.style.display = "none";
-  var pElement = document.createElement("p");
-  pElement.innerText = message;
-  congratsElement.appendChild(pElement);
-  option1Element.style.display = "block";
-  option2Element.style.display = "block";
+// Exibir a próxima pergunta
+function setNextQuestion() {
+    if (currentQuestionIndex < questions.length) {
+        showQuestion(questions[currentQuestionIndex]);
+    } else {
+        endGame();
+    }
 }
+
+// Exibir a pergunta atual
+function showQuestion(question) {
+    questionElement.innerText = question.question;
+    optionsElement.innerHTML = "";
+
+    for (let i = 0; i < question.options.length; i++) {
+        const option = document.createElement("li");
+        option.innerText = question.options[i];
+        option.dataset.index = i;
+        option.addEventListener("click", selectOption);
+        optionsElement.appendChild(option);
+    }
+}
+
+// Selecionar a opção
+function selectOption(event) {
+    const selectedOption = event.target;
+    const selectedAnswer = parseInt(selectedOption.dataset.index);
+
+    if (selectedAnswer === questions[currentQuestionIndex].answer) {
+        score++;
+        playCorrectSound();
+    } else {
+        playWrongSound();
+        setGameScreen("gameOverContainer");
+    }
+
+    selectedOption.classList.add("selected");
+
+    Array.from(optionsElement.children).forEach(option => {
+        option.removeEventListener("click", selectOption);
+        if (parseInt(option.dataset.index) === questions[currentQuestionIndex].answer) {
+            option.classList.add("correct");
+        } else {
+            option.classList.add("incorrect");
+        }
+    });
+
+    nextButton.disabled = false;
+}
+
+// Finalizar o jogo
+function endGame() {
+    if (score === questions.length) {
+        setGameScreen("winContainer");
+    } else {
+        setGameScreen("gameOverContainer");
+    }
+}
+
+// Alterar a tela exibida
+function setGameScreen(screen) {
+    startButton.style.display = screen === "container" ? "block" : "none";
+    questionContainer.style.display = screen === "questionContainer" ? "block" : "none";
+    gameOverContainer.style.display = screen === "gameOverContainer" ? "block" : "none";
+    winContainer.style.display = screen === "winContainer" ? "block" : "none";
+    backgroundAudio.pause();
+
+    if (screen === "container" || screen === "questionContainer") {
+        backgroundAudio.currentTime = 0;
+        backgroundAudio.play();
+    }
+}
+
+// Função para reproduzir o efeito sonoro de resposta correta
+function playCorrectSound() {
+    correctSound.currentTime = 0;
+    correctSound.play();
+}
+
+// Função para reproduzir o efeito sonoro de resposta errada
+function playWrongSound() {
+    wrongSound.currentTime = 0;
+    wrongSound.play();
+}
+
+// Inicializar o jogo quando a página carregar
+document.addEventListener("DOMContentLoaded", initializeGame);
