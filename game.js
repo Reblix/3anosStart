@@ -40,6 +40,10 @@ startButtonElement.addEventListener('click', function() {
   startGame();
   loadQuestion();
 });
+startButtonElement.addEventListener('touchstart', function() {
+  startGame();
+  loadQuestion();
+});
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
