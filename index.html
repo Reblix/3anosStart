@@ -1,41 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Geek em comemoração aos 3 anos</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Reblix's Quiz</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="welcome-message message">
-      <h1>Hoje o nosso dia 20 vai ser todo diferentão, então tu vai precisar zerar esse joguinho pra descobrir as próximas etapas. Hehe ^^</h1>
-      <button id="start-button">Toque para começar</button>
+    <div id="container">
+        <h1 id="title">Reblix's Quiz, 3 anos hein? Uau!</h1>
+        <button id="startButton">Começar</button>
     </div>
-    <div class="title" style="display: none;">
-      <h2>Quiz Geek em comemoração aos 3 anos</h2>
-    </div>
-    <div id="game" style="display: none;">
-      <div id="question"></div>
-      <div id="options">
-        <button class="option" id="option1"></button>
-        <button class="option" id="option2"></button>
-      </div>
-    </div>
-    <div id="game-over" style="display: none;">
-      <p>Ow my gosh, errou, errrooou feio!!!!</p>
-      <button id="restart-button">Tente novamente</button>
-    </div>
-    <div id="congrats" style="display: none;"></div>
-  </div>
 
-  <audio id="background-music" loop>
-    <source src="assets/sounds/aespa.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="answer-music" loop>
-    <source src="assets/sounds/twice.mp3" type="audio/mpeg">
-  </audio>
+    <div id="questionContainer">
+        <h2 id="question"></h2>
+        <ul id="options"></ul>
+        <button id="nextButton">Próxima Pergunta</button>
+    </div>
 
-  <script src="game.js"></script>
+    <div id="gameOverContainer">
+        <h2 id="gameOverText">Errooooou, erroooou feio!!!!</h2>
+        <button id="retryButton">Tentar novamente</button>
+    </div>
+
+    <div id="winContainer">
+        <h2 id="winText">Olha pra elaaa, olha como ela é inteligenteeehhhh!!!</h2>
+        <p>Escolha uma surpresa:</p>
+        <button id="surprise1Button">Surpresa 1</button>
+        <button id="surprise2Button">Surpresa 2</button>
+    </div>
+
+    <audio id="backgroundAudio" src="twice.mp3" loop></audio>
+
+    <script src="game.js"></script>
 </body>
 </html>
