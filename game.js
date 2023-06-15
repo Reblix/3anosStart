@@ -47,10 +47,35 @@ startButtonElement.addEventListener('click', function() {
 
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
-  showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
+  if (checkAnswer(option1Element.innerText)) {
+    showCongratsMessage();
+    correctSound.play();
+    backgroundMusic.volume = backgroundMusicVolume;
+    setTimeout(function() {
+      currentQuestionIndex++;
+      loadQuestion();
+    }, 1000);
+  } else {
+    showWrongMessage();
+    incorrectSound.play();
+    backgroundMusic.volume = backgroundMusicVolume;
+  }
 });
+
 option2Element.addEventListener('click', function() {
-  showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
+  if (checkAnswer(option2Element.innerText)) {
+    showCongratsMessage();
+    correctSound.play();
+    backgroundMusic.volume = backgroundMusicVolume;
+    setTimeout(function() {
+      currentQuestionIndex++;
+      loadQuestion();
+    }, 1000);
+  } else {
+    showWrongMessage();
+    incorrectSound.play();
+    backgroundMusic.volume = backgroundMusicVolume;
+  }
 });
 
 function startGame() {
@@ -72,24 +97,8 @@ function loadQuestion() {
   } else {
     var question = questions[currentQuestionIndex];
     questionElement.innerText = question.text;
-    optionsElement.forEach(function(element, index) {
-      element.innerText = question.options[index];
-      element.addEventListener('click', function() {
-        if (this.innerText === question.answer) {
-          correctSound.play();
-          backgroundMusic.volume = backgroundMusicVolume;
-          setTimeout(function() {
-            currentQuestionIndex++;
-            loadQuestion();
-          }, 1000);
-        } else {
-          gameElement.style.display = "none";
-          gameOverElement.style.display = "block";
-          incorrectSound.play();
-          backgroundMusic.volume = backgroundMusicVolume;
-        }
-      });
-    });
+    option1Element.innerText = question.options[0];
+    option2Element.innerText = question.options[1];
   }
 }
 
@@ -100,11 +109,21 @@ function restartGame() {
   loadQuestion();
 }
 
-function showMessage(message) {
-  congratsElement.style.display = "none";
-  var pElement = document.createElement("p");
-  pElement.innerText = message;
-  congratsElement.appendChild(pElement);
-  option1Element.style.display = "block";
-  option2Element.style.display = "block";
+function checkAnswer(selectedAnswer) {
+  var question = questions[currentQuestionIndex];
+  return selectedAnswer === question.answer;
+}
+
+function showCongratsMessage() {
+  congratsElement.style.display = "block";
+  congratsElement.innerText = "Olha pra ela como ela é inteligente, acertou, parabéns!!!";
+  option1Element.style.display = "none";
+  option2Element.style.display = "none";
+}
+
+function showWrongMessage() {
+  congratsElement.style.display = "block";
+  congratsElement.innerText = "Errrouuu, errou feeeeiooo";
+  option1Element.style.display = "none";
+  option2Element.style.display = "none";
 }
