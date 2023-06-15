@@ -97,8 +97,10 @@ function loadQuestion() {
   } else {
     var question = questions[currentQuestionIndex];
     questionElement.innerText = question.text;
-    option1Element.innerText = question.options[0];
-    option2Element.innerText = question.options[1];
+    for (var i = 0; i < optionsElement.length; i++) {
+      optionsElement[i].style.display = "block";
+      optionsElement[i].innerText = question.options[i];
+    }
   }
 }
 
@@ -117,13 +119,15 @@ function checkAnswer(selectedAnswer) {
 function showCongratsMessage() {
   congratsElement.style.display = "block";
   congratsElement.innerText = "Olha pra ela como ela é inteligente, acertou, parabéns!!!";
-  option1Element.style.display = "none";
-  option2Element.style.display = "none";
+  for (var i = 0; i < optionsElement.length; i++) {
+    optionsElement[i].style.display = "none";
+  }
 }
 
 function showWrongMessage() {
   congratsElement.style.display = "block";
   congratsElement.innerText = "Errrouuu, errou feeeeiooo";
-  option1Element.style.display = "none";
-  option2Element.style.display = "none";
+  for (var i = 0; i < optionsElement.length; i++) {
+    optionsElement[i].style.display = "none";
+  }
 }
