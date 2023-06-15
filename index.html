@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Geek em comemoração aos 3 anos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="message">
+      <h1>Hoje o nosso dia 20 vai ser todo diferentão, então tu vai precisar zerar esse joguinho pra descobrir as próximas etapas. Hehe ^^</h1>
+      <p>Toque para fechar esta mensagem</p>
+    </div>
+    <div class="title">
+      <h2>Quiz Geek em comemoração aos 3 anos</h2>
+    </div>
+    <button id="start-button">Toque aqui para iniciar</button>
+    <div id="game" style="display: none;">
+      <div id="question"></div>
+      <div id="options">
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+        <button class="option"></button>
+      </div>
+    </div>
+    <div id="game-over" style="display: none;">
+      <p>Ow my gosh, errou, errrooou feio!!!!</p>
+      <button id="restart-button">Tente novamente</button>
+    </div>
+    <div id="congrats" style="display: none;">
+      <p>Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:</p>
+      <button id="option1">Jantar no Jabuticabas</button>
+      <button id="option2">Noitada aleatória</button>
+    </div>
+  </div>
+
+  <audio id="background-music" loop>
+    <source src="assets/sounds/aespa.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="answer-music" loop>
+    <source src="assets/sounds/twice.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="game.js"></script>
+</body>
+</html>
