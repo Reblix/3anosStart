@@ -35,7 +35,6 @@ var questions = [
 ];
 
 var currentQuestionIndex = 0;
-var backgroundMusicVolume = 0.6;
 
 startButtonElement.addEventListener('click', function() {
   welcomeElement.style.display = "none";
@@ -47,60 +46,37 @@ startButtonElement.addEventListener('click', function() {
 
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
-  if (checkAnswer(option1Element.innerText)) {
-    showCongratsMessage();
-    correctSound.play();
-    backgroundMusic.volume = backgroundMusicVolume;
-    setTimeout(function() {
-      currentQuestionIndex++;
-      loadQuestion();
-    }, 1000);
-  } else {
-    showWrongMessage();
-    incorrectSound.play();
-    backgroundMusic.volume = backgroundMusicVolume;
-  }
+  showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
 });
-
 option2Element.addEventListener('click', function() {
-  if (checkAnswer(option2Element.innerText)) {
-    showCongratsMessage();
-    correctSound.play();
-    backgroundMusic.volume = backgroundMusicVolume;
-    setTimeout(function() {
-      currentQuestionIndex++;
-      loadQuestion();
-    }, 1000);
-  } else {
-    showWrongMessage();
-    incorrectSound.play();
-    backgroundMusic.volume = backgroundMusicVolume;
-  }
+  showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
 });
-
-function startGame() {
-  welcomeElement.style.display = "none";
-  titleElement.style.display = "block";
-  startButtonElement.style.display = "none";
-  gameElement.style.display = "block";
-  backgroundMusic.volume = backgroundMusicVolume;
-  backgroundMusic.play();
-}
 
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
     gameElement.style.display = "none";
     congratsElement.style.display = "block";
     victorySound.play();
-    backgroundMusic.volume = backgroundMusicVolume;
     backgroundMusic.pause();
   } else {
     var question = questions[currentQuestionIndex];
     questionElement.innerText = question.text;
-    for (var i = 0; i < optionsElement.length; i++) {
-      optionsElement[i].style.display = "block";
-      optionsElement[i].innerText = question.options[i];
-    }
+    optionsElement.forEach(function(element, index) {
+      element.innerText = question.options[index];
+      element.addEventListener('click', function() {
+        if (this.innerText === question.answer) {
+          correctSound.play();
+          setTimeout(function() {
+            currentQuestionIndex++;
+            loadQuestion();
+          }, 1000);
+        } else {
+          gameElement.style.display = "none";
+          gameOverElement.style.display = "block";
+          incorrectSound.play();
+        }
+      });
+    });
   }
 }
 
@@ -111,23 +87,11 @@ function restartGame() {
   loadQuestion();
 }
 
-function checkAnswer(selectedAnswer) {
-  var question = questions[currentQuestionIndex];
-  return selectedAnswer === question.answer;
-}
-
-function showCongratsMessage() {
-  congratsElement.style.display = "block";
-  congratsElement.innerText = "Olha pra ela como ela é inteligente, acertou, parabéns!!!";
-  for (var i = 0; i < optionsElement.length; i++) {
-    optionsElement[i].style.display = "none";
-  }
-}
-
-function showWrongMessage() {
-  congratsElement.style.display = "block";
-  congratsElement.innerText = "Errrouuu, errou feeeeiooo";
-  for (var i = 0; i < optionsElement.length; i++) {
-    optionsElement[i].style.display = "none";
-  }
+function showMessage(message) {
+  congratsElement.style.display = "none";
+  var pElement = document.createElement("p");
+  pElement.innerText = message;
+  congratsElement.appendChild(pElement);
+  option1Element.style.display = "block";
+  option2Element.style.display = "block";
 }
