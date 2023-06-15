@@ -36,7 +36,10 @@ var questions = [
 
 var currentQuestionIndex = 0;
 
-startButtonElement.addEventListener('click', startGame);
+startButtonElement.addEventListener('click', function() {
+  startGame();
+  loadQuestion();
+});
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
@@ -48,9 +51,8 @@ option2Element.addEventListener('click', function() {
 function startGame() {
   welcomeElement.style.display = "none";
   titleElement.style.display = "block";
-  startButtonElement.style.display = "block";
+  startButtonElement.style.display = "none";
   gameElement.style.display = "block";
-  loadQuestion();
   backgroundMusic.play();
 }
 
