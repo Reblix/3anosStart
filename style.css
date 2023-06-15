@@ -1,104 +1,55 @@
-/* Reset de estilos padrão */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  background-color: #f9caca;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    font-family: Arial, sans-serif;
+    text-align: center;
 }
 
-.container {
-  text-align: center;
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.message {
-  margin-bottom: 1rem;
-  color: #fff;
+#title {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.message h1 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+#startButton,
+#retryButton,
+#surprise1Button,
+#surprise2Button {
+    padding: 10px 20px;
+    font-size: 18px;
 }
 
-.title {
-  margin-bottom: 1rem;
+#questionContainer,
+#gameOverContainer,
+#winContainer {
+    display: none;
+    margin-top: 50px;
 }
 
-.title h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
+#nextButton {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 20px;
 }
 
-button {
-  display: block;
-  margin: 0 auto;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  background-color: #fd8e81;
-  color: #fff;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
+li {
+    margin: 10px 0;
+    cursor: pointer;
 }
 
-button:hover {
-  background-color: #fd574d;
+li.selected {
+    font-weight: bold;
 }
 
-#game,
-#game-over,
-#congrats {
-  margin-bottom: 1rem;
+li.correct {
+    color: green;
 }
 
-#game-over p,
-#congrats p {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-
-#options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.option {
-  margin: 0.5rem;
-}
-
-@media screen and (max-width: 600px) {
-  .message h1 {
-    font-size: 1.2rem;
-  }
-
-  .title h2 {
-    font-size: 1.5rem;
-  }
-
-  button {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-  }
-
-  #game-over p,
-  #congrats p {
-    font-size: 1rem;
-  }
+li.incorrect {
+    color: red;
 }
