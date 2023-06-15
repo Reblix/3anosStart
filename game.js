@@ -37,13 +37,13 @@ var questions = [
 var currentQuestionIndex = 0;
 
 startButtonElement.addEventListener('click', function() {
-  startGame();
+  welcomeElement.style.display = "none";
+  titleElement.style.display = "block";
+  gameElement.style.display = "block";
   loadQuestion();
+  backgroundMusic.play();
 });
-startButtonElement.addEventListener('touchstart', function() {
-  startGame();
-  loadQuestion();
-});
+
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
@@ -51,14 +51,6 @@ option1Element.addEventListener('click', function() {
 option2Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
 });
-
-function startGame() {
-  welcomeElement.style.display = "none";
-  titleElement.style.display = "block";
-  startButtonElement.style.display = "none";
-  gameElement.style.display = "block";
-  backgroundMusic.play();
-}
 
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
