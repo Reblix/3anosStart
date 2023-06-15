@@ -35,6 +35,7 @@ var questions = [
 ];
 
 var currentQuestionIndex = 0;
+var backgroundMusicVolume = 0.6;
 
 startButtonElement.addEventListener('click', function() {
   welcomeElement.style.display = "none";
@@ -52,11 +53,21 @@ option2Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
 });
 
+function startGame() {
+  welcomeElement.style.display = "none";
+  titleElement.style.display = "block";
+  startButtonElement.style.display = "none";
+  gameElement.style.display = "block";
+  backgroundMusic.volume = backgroundMusicVolume;
+  backgroundMusic.play();
+}
+
 function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
     gameElement.style.display = "none";
     congratsElement.style.display = "block";
     victorySound.play();
+    backgroundMusic.volume = backgroundMusicVolume;
     backgroundMusic.pause();
   } else {
     var question = questions[currentQuestionIndex];
@@ -66,6 +77,7 @@ function loadQuestion() {
       element.addEventListener('click', function() {
         if (this.innerText === question.answer) {
           correctSound.play();
+          backgroundMusic.volume = backgroundMusicVolume;
           setTimeout(function() {
             currentQuestionIndex++;
             loadQuestion();
@@ -74,6 +86,7 @@ function loadQuestion() {
           gameElement.style.display = "none";
           gameOverElement.style.display = "block";
           incorrectSound.play();
+          backgroundMusic.volume = backgroundMusicVolume;
         }
       });
     });
