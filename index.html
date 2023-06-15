@@ -8,14 +8,14 @@
 </head>
 <body>
   <div class="container">
-    <div class="message">
+    <div class="welcome-message message">
       <h1>Hoje o nosso dia 20 vai ser todo diferentão, então tu vai precisar zerar esse joguinho pra descobrir as próximas etapas. Hehe ^^</h1>
-      <p>Toque para fechar esta mensagem</p>
+      <p>Toque para começar</p>
     </div>
-    <div class="title">
+    <div class="title" style="display: none;">
       <h2>Quiz Geek em comemoração aos 3 anos</h2>
     </div>
-    <button id="start-button">Toque aqui para iniciar</button>
+    <button id="start-button" style="display: none;">Toque aqui para iniciar</button>
     <div id="game" style="display: none;">
       <div id="question"></div>
       <div id="options">
@@ -37,10 +37,10 @@
   </div>
 
   <audio id="background-music" loop>
-    <source src="assets/sounds/aespa.mp3" type="audio/mpeg">
+    <source src="assets/sounds/musica_tela_inicial.mp3" type="audio/mpeg">
   </audio>
   <audio id="answer-music" loop>
-    <source src="assets/sounds/twice.mp3" type="audio/mpeg">
+    <source src="assets/sounds/musica_selecao_respostas.mp3" type="audio/mpeg">
   </audio>
 
   <script src="game.js"></script>
