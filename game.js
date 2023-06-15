@@ -4,7 +4,7 @@ var victorySound = new Audio("assets/sounds/aespa.mp3");
 var backgroundMusic = document.getElementById("background-music");
 var answerMusic = document.getElementById("answer-music");
 
-var welcomeElement = document.querySelector('.message');
+var welcomeElement = document.querySelector('.welcome-message');
 var titleElement = document.querySelector('.title');
 var startButtonElement = document.getElementById('start-button');
 var gameElement = document.getElementById('game');
@@ -36,7 +36,7 @@ var questions = [
 
 var currentQuestionIndex = 0;
 
-startButtonElement.addEventListener('click', startGame);
+welcomeElement.addEventListener('click', startGame);
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
@@ -47,10 +47,8 @@ option2Element.addEventListener('click', function() {
 
 function startGame() {
   welcomeElement.style.display = "none";
-  titleElement.style.display = "none";
-  startButtonElement.style.display = "none";
-  gameElement.style.display = "block";
-  loadQuestion();
+  titleElement.style.display = "block";
+  startButtonElement.style.display = "block";
   backgroundMusic.play();
 }
 
@@ -67,9 +65,11 @@ function loadQuestion() {
       element.innerText = question.options[index];
       element.addEventListener('click', function() {
         if (this.innerText === question.answer) {
-          currentQuestionIndex++;
-          loadQuestion();
           correctSound.play();
+          setTimeout(function() {
+            currentQuestionIndex++;
+            loadQuestion();
+          }, 1000);
         } else {
           gameElement.style.display = "none";
           gameOverElement.style.display = "block";
