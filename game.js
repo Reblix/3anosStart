@@ -36,7 +36,7 @@ var questions = [
 
 var currentQuestionIndex = 0;
 
-welcomeElement.addEventListener('click', startGame);
+startButtonElement.addEventListener('click', startGame);
 restartButtonElement.addEventListener('click', restartGame);
 option1Element.addEventListener('click', function() {
   showMessage("Parabéns, você é a mulher mais inteligente e sexy desse mundo mesmo hein, agora escolhe o que vamos fazer:");
@@ -49,6 +49,8 @@ function startGame() {
   welcomeElement.style.display = "none";
   titleElement.style.display = "block";
   startButtonElement.style.display = "block";
+  gameElement.style.display = "block";
+  loadQuestion();
   backgroundMusic.play();
 }
 
