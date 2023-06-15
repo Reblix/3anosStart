@@ -20,7 +20,7 @@ var questions = [
   {
     text: "Quem é mais over power de todos?",
     options: ["Batman", "Batman com preparo", "Batman do futuro", "Batman sempre"],
-    answer: "Todas as opções podem ser consideradas corretas"
+    answer: "Batman sempre"
   },
   {
     text: "Quem é a mulher mais bonita do multiverso?",
