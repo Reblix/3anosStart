@@ -56,6 +56,7 @@ function loadQuestion() {
   if (currentQuestionIndex >= questions.length) {
     gameElement.style.display = "none";
     congratsElement.style.display = "block";
+    congratsElement.innerText = "Olha pra ela como ela é inteligente, acertou, parabéns!!!";
     victorySound.play();
     backgroundMusic.pause();
   } else {
