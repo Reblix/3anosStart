@@ -1,147 +1,97 @@
-// Armazenar as perguntas e respostas
-const questions = [
-    {
-        question: "Qual é a capital do Brasil?",
-        options: ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador"],
-        answer: 2
-    },
-    {
-        question: "Qual é o maior planeta do sistema solar?",
-        options: ["Júpiter", "Saturno", "Terra", "Vênus"],
-        answer: 0
-    },
-    // Adicione as outras perguntas aqui
+// Músicas e sons
+let backgroundMusic = new Audio('twice.mp3');
+let correctSound = new Audio('acertou.mp3');
+let gameOverSound = new Audio('errou.mp3');
+let winSound = new Audio('aespa.mp3');
+
+let gameContainer = document.getElementById('gameContainer');
+
+// Definição do jogo
+let gameState = 'START';
+
+// Perguntas e respostas
+let questions = [
+  { question: "Primeira pergunta", correctAnswer: "Resposta correta 1", wrongAnswers: ["Resposta errada 1", "Resposta errada 2", "Resposta errada 3"] },
+  { question: "Segunda pergunta", correctAnswer: "Resposta correta 2", wrongAnswers: ["Resposta errada 1", "Resposta errada 2", "Resposta errada 3"] },
+  { question: "Terceira pergunta", correctAnswer: "Resposta correta 3", wrongAnswers: ["Resposta errada 1", "Resposta errada 2", "Resposta errada 3"] },
+  { question: "Quarta pergunta", correctAnswer: "Resposta correta 4", wrongAnswers: ["Resposta errada 1", "Resposta errada 2", "Resposta errada 3"] },
+  { question: "Quinta pergunta", correctAnswer: "Resposta correta 5", wrongAnswers: ["Resposta errada 1", "Resposta errada 2", "Resposta errada 3"] }
 ];
 
-// Elementos da interface
-const startButton = document.getElementById("startButton");
-const questionContainer = document.getElementById("questionContainer");
-const questionElement = document.getElementById("question");
-const optionsElement = document.getElementById("options");
-const nextButton = document.getElementById("nextButton");
-const gameOverContainer = document.getElementById("gameOverContainer");
-const retryButton = document.getElementById("retryButton");
-const winContainer = document.getElementById("winContainer");
-const surprise1Button = document.getElementById("surprise1Button");
-const surprise2Button = document.getElementById("surprise2Button");
-const backgroundAudio = document.getElementById("backgroundAudio");
-const correctSound = document.getElementById("correctSound");
-const wrongSound = document.getElementById("wrongSound");
+// Função de renderização do jogo
+function renderGame() {
+  gameContainer.innerHTML = '';
 
-// Variáveis do jogo
-let currentQuestionIndex = 0;
-let score = 0;
+  if (gameState === 'START') {
+    let startButton = document.createElement('button');
+    startButton.textContent = "Iniciar";
+    startButton.onclick = function() {
+      gameState = 'QUIZ';
+      renderGame();
+    };
+    gameContainer.appendChild(startButton);
+    backgroundMusic.play();
+  } else if (gameState === 'QUIZ') {
+    for (let i = 0; i < questions.length; i++) {
+      let questionParagraph = document.createElement('p');
+      questionParagraph.textContent = questions[i].question;
+      gameContainer.appendChild(questionParagraph);
 
-// Inicializar o jogo
-function initializeGame() {
-    startButton.addEventListener("click", startGame);
-    nextButton.addEventListener("click", () => {
-        currentQuestionIndex++;
-        setNextQuestion();
-    });
-    retryButton.addEventListener("click", startGame);
-    surprise1Button.addEventListener("click", () => {
-        alert("Almoço em restaurante de sua escolha");
-    });
-    surprise2Button.addEventListener("click", () => {
-        alert("Qualquer almoço de aplicativo de sua escolha");
-    });
-
-    setGameScreen("container");
-}
-
-// Iniciar o jogo
-function startGame() {
-    score = 0;
-    currentQuestionIndex = 0;
-    setGameScreen("questionContainer");
-    setNextQuestion();
-}
-
-// Exibir a próxima pergunta
-function setNextQuestion() {
-    if (currentQuestionIndex < questions.length) {
-        showQuestion(questions[currentQuestionIndex]);
-    } else {
-        endGame();
-    }
-}
-
-// Exibir a pergunta atual
-function showQuestion(question) {
-    questionElement.innerText = question.question;
-    optionsElement.innerHTML = "";
-
-    for (let i = 0; i < question.options.length; i++) {
-        const option = document.createElement("li");
-        option.innerText = question.options[i];
-        option.dataset.index = i;
-        option.addEventListener("click", selectOption);
-        optionsElement.appendChild(option);
-    }
-}
-
-// Selecionar a opção
-function selectOption(event) {
-    const selectedOption = event.target;
-    const selectedAnswer = parseInt(selectedOption.dataset.index);
-
-    if (selectedAnswer === questions[currentQuestionIndex].answer) {
-        score++;
-        playCorrectSound();
-    } else {
-        playWrongSound();
-        setGameScreen("gameOverContainer");
-    }
-
-    selectedOption.classList.add("selected");
-
-    Array.from(optionsElement.children).forEach(option => {
-        option.removeEventListener("click", selectOption);
-        if (parseInt(option.dataset.index) === questions[currentQuestionIndex].answer) {
-            option.classList.add("correct");
-        } else {
-            option.classList.add("incorrect");
+      let correctAnswerButton = document.createElement('button');
+      correctAnswerButton.textContent = questions[i].correctAnswer;
+      correctAnswerButton.onclick = function() {
+        correctSound.play();
+        if (i === questions.length - 1) {
+          gameState = 'WIN';
+          renderGame();
         }
-    });
+      };
+      gameContainer.appendChild(correctAnswerButton);
 
-    nextButton.disabled = false;
-}
-
-// Finalizar o jogo
-function endGame() {
-    if (score === questions.length) {
-        setGameScreen("winContainer");
-    } else {
-        setGameScreen("gameOverContainer");
+      for (let j = 0; j < questions[i].wrongAnswers.length; j++) {
+        let wrongAnswerButton = document.createElement('button');
+        wrongAnswerButton.textContent = questions[i].wrongAnswers[j];
+        wrongAnswerButton.onclick = function() {
+          gameState = 'GAME_OVER';
+          renderGame();
+        };
+        gameContainer.appendChild(wrongAnswerButton);
+      }
     }
+  } else if (gameState === 'GAME_OVER') {
+    let gameOverMessage = document.createElement('p');
+    gameOverMessage.textContent = "Errooooou, erroooou feio!!!!";
+    gameContainer.appendChild(gameOverMessage);
+
+    let tryAgainButton = document.createElement('button');
+    tryAgainButton.textContent = "Tentar novamente";
+    tryAgainButton.onclick = function() {
+      gameState = 'QUIZ';
+      renderGame();
+    };
+    gameContainer.appendChild(tryAgainButton);
+    gameOverSound.play();
+  } else if (gameState === 'WIN') {
+    let winMessage = document.createElement('p');
+    winMessage.textContent = "Olha pra elaaa, olha como ela é inteligenteeehhhh!!! Agora você vai ter que escolher entre 2 opções de surpresa";
+    gameContainer.appendChild(winMessage);
+
+    let surpriseButton1 = document.createElement('button');
+    surpriseButton1.textContent = "Surpresa 1";
+    surpriseButton1.onclick = function() {
+      alert("Almoço em restaurante de sua escolha");
+    };
+    gameContainer.appendChild(surpriseButton1);
+
+    let surpriseButton2 = document.createElement('button');
+    surpriseButton2.textContent = "Surpresa 2";
+    surpriseButton2.onclick = function() {
+      alert("Qualquer almoço de aplicativo de sua escolha");
+    };
+    gameContainer.appendChild(surpriseButton2);
+    winSound.play();
+  }
 }
 
-// Alterar a tela exibida
-function setGameScreen(screen) {
-    startButton.style.display = screen === "container" ? "block" : "none";
-    questionContainer.style.display = screen === "questionContainer" ? "block" : "none";
-    gameOverContainer.style.display = screen === "gameOverContainer" ? "block" : "none";
-    winContainer.style.display = screen === "winContainer" ? "block" : "none";
-    backgroundAudio.pause();
-
-    if (screen === "container" || screen === "questionContainer") {
-        backgroundAudio.currentTime = 0;
-        backgroundAudio.play();
-    }
-}
-
-// Função para reproduzir o efeito sonoro de resposta correta
-function playCorrectSound() {
-    correctSound.currentTime = 0;
-    correctSound.play();
-}
-
-// Função para reproduzir o efeito sonoro de resposta errada
-function playWrongSound() {
-    wrongSound.currentTime = 0;
-    wrongSound.play();
-}
-
-// Inicializar o jogo quando a página carregar
-document.addEventListener("DOMContentLoaded", initializeGame);
+// Inicializa o jogo
+renderGame();
