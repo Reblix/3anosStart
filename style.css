@@ -1,55 +1,19 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+  text-align: center;
+  background-color: #f0f0f0;
 }
 
-#container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+#gameContainer {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  border: 1px solid black;
+  padding: 20px;
+  background-color: #fff;
 }
 
-#title {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-#startButton,
-#retryButton,
-#surprise1Button,
-#surprise2Button {
-    padding: 10px 20px;
-    font-size: 18px;
-}
-
-#questionContainer,
-#gameOverContainer,
-#winContainer {
-    display: none;
-    margin-top: 50px;
-}
-
-#nextButton {
-    padding: 10px 20px;
-    font-size: 18px;
-    margin-top: 20px;
-}
-
-li {
-    margin: 10px 0;
-    cursor: pointer;
-}
-
-li.selected {
-    font-weight: bold;
-}
-
-li.correct {
-    color: green;
-}
-
-li.incorrect {
-    color: red;
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
 }
