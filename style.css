@@ -7,7 +7,7 @@ body {
 h1 {
     color: #FFD700; /* ouro */
     text-shadow: 2px 2px #FF4500; /* laranja vermelho */
-    font-size: 3em;
+    font-size: 3.5em; /* Aumentado para 3.5em */
     text-align: center;
     padding-top: 20px;
 }
@@ -26,7 +26,7 @@ h1 {
 }
 
 p {
-    font-size: 1.2em;
+    font-size: 1.5em; /* Aumentado para 1.5em */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -36,10 +36,10 @@ button {
     background-color: #FF4500; /* laranja vermelho */
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 15px 25px; /* Aumentado para 15px 25px */
     margin-bottom: 10px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.5em; /* Aumentado para 1.5em */
     transition: background-color 0.5s;
 }
 
