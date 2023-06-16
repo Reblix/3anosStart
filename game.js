@@ -46,9 +46,6 @@ function renderGame() {
     nextButton.textContent = "Começar Quiz";
     nextButton.onclick = function() {
       gameState = 'QUIZ';
-      if (backgroundMusic.paused) { // verifica se a música de fundo está pausada
-        backgroundMusic.play(); // toca a música de fundo
-      }
       renderGame();
     };
     gameContainer.appendChild(nextButton);
@@ -88,12 +85,14 @@ function renderGame() {
     tryAgainButton.onclick = function() {
       gameState = 'QUIZ';
       currentQuestion = 0;
-      backgroundMusic.volume = 1; // restaura o volume da música de fundo
       renderGame();
     };
     gameContainer.appendChild(tryAgainButton);
     backgroundMusic.volume = 0.5; // reduz o volume da música de fundo
     gameOverSound.play();
+    gameOverSound.onended = function() {
+      backgroundMusic.volume = 1; // restaura o volume da música de fundo
+    }
   } else if (gameState === 'WIN') {
     let winMessage = document.createElement('p');
     winMessage.textContent = "Olha pra elaaa, olha como ela é inteligenteeehhhh!!! Agora você vai ter que escolher entre 2 opções de surpresa";
