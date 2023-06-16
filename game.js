@@ -88,9 +88,11 @@ function renderGame() {
     tryAgainButton.onclick = function() {
       gameState = 'QUIZ';
       currentQuestion = 0;
+      backgroundMusic.volume = 1; // restaura o volume da música de fundo
       renderGame();
     };
     gameContainer.appendChild(tryAgainButton);
+    backgroundMusic.volume = 0.5; // reduz o volume da música de fundo
     gameOverSound.play();
   } else if (gameState === 'WIN') {
     let winMessage = document.createElement('p');
@@ -110,6 +112,7 @@ function renderGame() {
       alert("Qualquer almoço de aplicativo de sua escolha");
     };
     gameContainer.appendChild(surpriseButton2);
+    backgroundMusic.pause(); // para a música de fundo
     winSound.play();
   }
 }
