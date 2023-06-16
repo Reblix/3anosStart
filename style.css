@@ -17,3 +17,8 @@ button {
   margin: 10px auto;
   padding: 10px 20px;
 }
+
+h1 {
+  color: red;
+  text-shadow: 2px 2px #000;
+}
