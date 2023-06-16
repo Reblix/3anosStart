@@ -1,8 +1,8 @@
 // Músicas e sons
-let backgroundMusic = new Audio('twice.mp3');
-let correctSound = new Audio('acertou.mp3');
-let gameOverSound = new Audio('errou.mp3');
-let winSound = new Audio('aespa.mp3');
+let backgroundMusic = new Audio('assets/sounds/twice.mp3');
+let correctSound = new Audio('assets/sounds/acertou.mp3');
+let gameOverSound = new Audio('assets/sounds/errou.mp3');
+let winSound = new Audio('assets/sounds/aespa.mp3');
 
 let gameContainer = document.getElementById('gameContainer');
 
@@ -18,45 +18,62 @@ let questions = [
   { question: "Quinta pergunta", correctAnswer: "Resposta correta 5", wrongAnswers: ["Resposta errada 1", "Resposta errada 2", "Resposta errada 3"] }
 ];
 
+let currentQuestion = 0;
+
 // Função de renderização do jogo
 function renderGame() {
   gameContainer.innerHTML = '';
 
   if (gameState === 'START') {
+    let startMessage = document.createElement('p');
+    startMessage.textContent = "Hoje o nosso dia vai ser todo diferentão, então tu vai precisar zerar esse joguinho pra seguirmos pra próxima etapa e tals.";
+    gameContainer.appendChild(startMessage);
+
     let startButton = document.createElement('button');
     startButton.textContent = "Iniciar";
     startButton.onclick = function() {
-      gameState = 'QUIZ';
+      gameState = 'TITLE';
       renderGame();
     };
     gameContainer.appendChild(startButton);
     backgroundMusic.play();
+  } else if (gameState === 'TITLE') {
+    let title = document.createElement('h1');
+    title.textContent = "Reblix's Quiz, 3 anos hein? Uau!";
+    gameContainer.appendChild(title);
+
+    let nextButton = document.createElement('button');
+    nextButton.textContent = "Começar Quiz";
+    nextButton.onclick = function() {
+      gameState = 'QUIZ';
+      renderGame();
+    };
+    gameContainer.appendChild(nextButton);
   } else if (gameState === 'QUIZ') {
-    for (let i = 0; i < questions.length; i++) {
-      let questionParagraph = document.createElement('p');
-      questionParagraph.textContent = questions[i].question;
-      gameContainer.appendChild(questionParagraph);
+    let questionParagraph = document.createElement('p');
+    questionParagraph.textContent = questions[currentQuestion].question;
+    gameContainer.appendChild(questionParagraph);
 
-      let correctAnswerButton = document.createElement('button');
-      correctAnswerButton.textContent = questions[i].correctAnswer;
-      correctAnswerButton.onclick = function() {
-        correctSound.play();
-        if (i === questions.length - 1) {
-          gameState = 'WIN';
-          renderGame();
-        }
-      };
-      gameContainer.appendChild(correctAnswerButton);
-
-      for (let j = 0; j < questions[i].wrongAnswers.length; j++) {
-        let wrongAnswerButton = document.createElement('button');
-        wrongAnswerButton.textContent = questions[i].wrongAnswers[j];
-        wrongAnswerButton.onclick = function() {
-          gameState = 'GAME_OVER';
-          renderGame();
-        };
-        gameContainer.appendChild(wrongAnswerButton);
+    let correctAnswerButton = document.createElement('button');
+    correctAnswerButton.textContent = questions[currentQuestion].correctAnswer;
+    correctAnswerButton.onclick = function() {
+      correctSound.play();
+      currentQuestion++;
+      if (currentQuestion === questions.length) {
+        gameState = 'WIN';
       }
+      renderGame();
+    };
+    gameContainer.appendChild(correctAnswerButton);
+
+    for (let j = 0; j < questions[currentQuestion].wrongAnswers.length; j++) {
+      let wrongAnswerButton = document.createElement('button');
+      wrongAnswerButton.textContent = questions[currentQuestion].wrongAnswers[j];
+      wrongAnswerButton.onclick = function() {
+        gameState = 'GAME_OVER';
+        renderGame();
+      };
+      gameContainer.appendChild(wrongAnswerButton);
     }
   } else if (gameState === 'GAME_OVER') {
     let gameOverMessage = document.createElement('p');
@@ -67,6 +84,7 @@ function renderGame() {
     tryAgainButton.textContent = "Tentar novamente";
     tryAgainButton.onclick = function() {
       gameState = 'QUIZ';
+      currentQuestion = 0;
       renderGame();
     };
     gameContainer.appendChild(tryAgainButton);
