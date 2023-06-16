@@ -33,10 +33,10 @@ function renderGame() {
     startButton.textContent = "Iniciar";
     startButton.onclick = function() {
       gameState = 'TITLE';
+      backgroundMusic.play(); // toca a música de fundo
       renderGame();
     };
     gameContainer.appendChild(startButton);
-    backgroundMusic.play();
   } else if (gameState === 'TITLE') {
     let title = document.createElement('h1');
     title.textContent = "Reblix's Quiz, 3 anos hein? Uau!";
@@ -46,6 +46,9 @@ function renderGame() {
     nextButton.textContent = "Começar Quiz";
     nextButton.onclick = function() {
       gameState = 'QUIZ';
+      if (backgroundMusic.paused) { // verifica se a música de fundo está pausada
+        backgroundMusic.play(); // toca a música de fundo
+      }
       renderGame();
     };
     gameContainer.appendChild(nextButton);
