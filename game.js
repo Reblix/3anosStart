@@ -12,7 +12,7 @@ let gameState = 'START';
 // Perguntas e respostas
 let questions = [
   { question: "Primeira pergunta - Qual é o nosso favorito nº1 pra bater papo e ter reflexões e tals?", correctAnswer: "Praça da igreja", wrongAnswers: ["Center", "Nosso quarto", "Praça da caminhada com sorvetinho"] },
-  { question: "Segunda pergunta - Quem é melhor lutador?", correctAnswer: "Demolidor", wrongAnswers: ["Batman", "Punho de ferro", "Shang-Chi] },
+  { question: "Segunda pergunta - Quem é melhor lutador?", correctAnswer: "Demolidor", wrongAnswers: ["Batman", "Punho de ferro", "Shang-Chi"] },
   { question: "Terceira pergunta - Chocolate branco é chocolate?", correctAnswer: "É sim, pq? Pq sim.", wrongAnswers: ["É chocolate preto pintado de branco", "É doce leite printado de branco", "É uma invenção dos comunistas"] },
   { question: "Quarta pergunta - Heluara Madlene odeia cor laranja no seu vesturário, exceto por:", correctAnswer: "Cinto laranja", wrongAnswers: ["Alça de sandália laranja", "Alça de bolsa laranja", "Listra em sapato"] },
   { question: "Quinta pergunta - Qual foi o álbum de kpop mais vendido até hoje? ", correctAnswer: "Proof - BTS", wrongAnswers: [" Bambi -  Baekhyun (EXO)", "Hello Future - NCT Dream", "NOEASY - STRAY KIDS"] }
